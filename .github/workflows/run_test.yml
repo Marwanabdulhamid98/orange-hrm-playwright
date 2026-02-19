@@ -1,0 +1,22 @@
+name: Playwright Tests
+
+on: [pull_request]
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        run: curl -Ls https://astral.sh/uv/install.sh | sh
+
+      - name: Sync dependencies
+        run: uv sync
+
+      - name: Install Playwright Browsers
+        run: uv run playwright install --with-deps
+
+      - name: Run tests
+        run: uv run pytest -v
